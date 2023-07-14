@@ -14,6 +14,13 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
+import Navbar from '@/components/navbar';
+import { Center, ChakraProvider, Flex, Spacer } from '@chakra-ui/react';
+import { sportfolioTheme } from '../utils/sportfolioTheme';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fas)
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -56,7 +63,16 @@ export default function RootLayout({
       <body className={inter.className}>
         <WagmiConfig config={wagmiConfig}>
           <RainbowKitProvider chains={chains}>
-            {children}
+            <ChakraProvider theme={sportfolioTheme}>
+              <Navbar />
+              <main>
+                <Flex maxW={'100%'}>
+                  <Spacer minW={'10%'} />
+                  {children}
+                  <Spacer minW={'10%'} />
+                </Flex>
+              </main>
+            </ChakraProvider>
           </RainbowKitProvider>
         </WagmiConfig>
       </body>

@@ -11,3 +11,5 @@ const colors = {
 }
 
 export const sportfolioTheme = extendTheme({ colors })
+
+export const navMaxHeight = '75px'

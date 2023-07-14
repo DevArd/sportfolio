@@ -15,8 +15,8 @@ import {
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import Navbar from '@/components/navbar';
-import { Center, ChakraProvider, Flex, Spacer } from '@chakra-ui/react';
-import { sportfolioTheme } from '../utils/sportfolioTheme';
+import { Box, ChakraProvider, Flex, Spacer } from '@chakra-ui/react';
+import { navMaxHeight, sportfolioTheme } from '../utils/sportfolioTheme';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 
@@ -64,14 +64,16 @@ export default function RootLayout({
         <WagmiConfig config={wagmiConfig}>
           <RainbowKitProvider chains={chains}>
             <ChakraProvider theme={sportfolioTheme}>
-              <Navbar />
-              <main>
-                <Flex maxW={'100%'}>
-                  <Spacer minW={'10%'} />
+              <Box as="header" position="fixed" zIndex={2}>
+                <Navbar />
+              </Box>
+              <Flex as="main" w={'100%'} zIndex={1}>
+                <Spacer minW={'10%'} />
+                <Box mt={navMaxHeight} >
                   {children}
-                  <Spacer minW={'10%'} />
-                </Flex>
-              </main>
+                </Box>
+                <Spacer minW={'10%'} />
+              </Flex>
             </ChakraProvider>
           </RainbowKitProvider>
         </WagmiConfig>

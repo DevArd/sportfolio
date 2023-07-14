@@ -1,15 +1,14 @@
-import { Flex, Heading, Spacer, Image, Button, Box, Stack, Center, Link } from '@chakra-ui/react'
+import { Flex, Spacer, Image, Button, Box, Stack, Center, Link } from '@chakra-ui/react'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import React from 'react'
 import NextLink from 'next/link'
+import { navMaxHeight } from '@/utils/sportfolioTheme'
 
 export default function Navbar() {
-    const maxHeight = '75px'
-
     return (
-        <Flex w='100%'>
-            <Box w='200px' maxHeight={maxHeight} ml='4'>
-                <Image src='logo.png' alt='Sportfolio' maxHeight={maxHeight} />
+        <Flex w='100%' position="fixed" bg={'gray'}>
+            <Box w='200px' maxHeight={navMaxHeight} ml='4'>
+                <Image src='logo.png' alt='Sportfolio' maxHeight={navMaxHeight} />
             </Box>
             <Spacer />
             <Stack direction={'row'}>

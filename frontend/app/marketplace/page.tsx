@@ -10,7 +10,7 @@ export default function Page() {
     return (
         <Tabs variant='soft-rounded' colorScheme='green' m={'2'}>
             <TabList>
-                {sports.map((sport, index) => (
+                {sports.sort((a, b) => a.label.localeCompare(b.label)).map((sport, index) => (
                     <Tab key={index}>
                         <Box mr={'2'}>
                             <FontAwesomeIcon icon={sport.selectedIcon} />
@@ -20,7 +20,7 @@ export default function Page() {
                 ))}
             </TabList>
             <TabPanels >
-                {sports.map((sport, index) => (
+                {sports.sort((a, b) => a.label.localeCompare(b.label)).map((sport, index) => (
                     <TabPanel key={index}>
                         <Wrap spacing='5'>
                             {talents.filter(x => x.sport === sport.label || sport.label === 'All').sort((a, b) => a.name.localeCompare(b.name)).map((talent, index) => (

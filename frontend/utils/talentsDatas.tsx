@@ -66,4 +66,35 @@ export const talents: ITalent[] = [
         img: 'talents/JanOblak.jpg',
         description: 'Considéré comme l\'un des meilleurs gardiens de but au monde, Oblak est remarquable pour ses réflexes rapides, son positionnement précis et sa capacité à réaliser des arrêts spectaculaires. Il est un mur infranchissable dans les cages',
     },
+
+    {
+        name: 'Michael Jordan',
+        sport: 'Basketball',
+        img: 'talents/JanOblak.jpg',
+        description: 'Considéré comme le plus grand joueur de basketball de tous les temps, Michael Jordan était un athlète incroyablement polyvalent. Il était connu pour son jeu aérien, sa capacité à marquer des paniers spectaculaires et sa détermination sans faille',
+    },
+    {
+        name: 'LeBron James',
+        sport: 'Basketball',
+        img: 'talents/JanOblak.jpg',
+        description: 'Un joueur emblématique de notre époque, LeBron James est une force dominante sur le terrain. Avec sa taille, sa force physique et sa vision du jeu exceptionnelle, il excelle dans tous les aspects du jeu et est un leader respecté',
+    },
+    {
+        name: 'Magic Johnson',
+        sport: 'Basketball',
+        img: 'talents/JanOblak.jpg',
+        description: 'Magic Johnson était un meneur de jeu brillant, connu pour sa vision du jeu et sa capacité à faire des passes spectaculaires. Il a joué un rôle essentiel dans la dynastie des Los Angeles Lakers dans les années 1980',
+    },
+    {
+        name: 'Kareem Abdul-Jabbar',
+        sport: 'Basketball',
+        img: 'talents/JanOblak.jpg',
+        description: 'Le meilleur marqueur de tous les temps de la NBA, Kareem Abdul-Jabbar était un centre dominant. Il était célèbre pour son fameux "skyhook" et sa longévité dans le sport, ayant joué à un haut niveau pendant près de 20 saisons',
+    },
+    {
+        name: 'Kobe Bryant',
+        sport: 'Basketball',
+        img: 'talents/JanOblak.jpg',
+        description: 'Considéré comme l\'un des plus grands joueurs de tous les temps, Kobe Bryant était un compétiteur féroce. Sa polyvalence, sa détermination et ses capacités offensives exceptionnelles lui ont permis de remporter de nombreux titres et de devenir une légende du jeu',
+    },
 ]

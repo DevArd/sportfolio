@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-;
+
 import "../SportfolioTalentToken.sol";
 
-contract MessiSportfolioToken is SportfolioToken {
+contract MessiSportfolioToken is SportfolioTalentToken {
 
-    constructor() SportfolioToken(
+    constructor() SportfolioTalentToken(
         "Messi Sportfolio Token",
         "MESSI",
         100000000 * 10 ** decimals(),

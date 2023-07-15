@@ -1053,7 +1053,7 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.44.0.tgz#961a5903c74139390478bdc808bcde3fc45ab7af"
   integrity sha512-Ag+9YM4ocKQx9AarydN0KY2j0ErMHNIocPDrVo8zAE44xLTjEtz81OdR68/cydGtk6m6jDb5Za3r2useMzYmSw==
 
-"@fortawesome/fontawesome-common-types@6.4.0":
+"@fortawesome/fontawesome-common-types@6.4.0", "@fortawesome/fontawesome-common-types@^6.4.0":
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.4.0.tgz#88da2b70d6ca18aaa6ed3687832e11f39e80624b"
   integrity sha512-HNii132xfomg5QVZw0HwXXpN22s7VBHQBv9CeOu9tfJnhsWQNd2lmTNi8CSrnw5B+5YOmzu1UoPAyxaXsJ6RgQ==
@@ -1062,6 +1062,13 @@
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.4.0.tgz#3727552eff9179506e9203d72feb5b1063c11a21"
   integrity sha512-Bertv8xOiVELz5raB2FlXDPKt+m94MQ3JgDfsVbrqNpLU9+UE2E18GKjLKw+d3XbeYPqg1pzyQKGsrzbw+pPaw==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.4.0"
+
+"@fortawesome/free-brands-svg-icons@^6.4.0":
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-6.4.0.tgz#c785cf5563231eadc5ef5f8cd0274e0b8920433f"
+  integrity sha512-qvxTCo0FQ5k2N+VCXb/PZQ+QMhqRVM4OORiO6MXdG6bKolIojGU/srQ1ptvKk0JTbRgaJOfL2qMqGvBEZG7Z6g==
   dependencies:
     "@fortawesome/fontawesome-common-types" "6.4.0"
 
@@ -1556,38 +1563,38 @@
   dependencies:
     tslib "^2.4.0"
 
-"@tanstack/query-core@4.29.19":
-  version "4.29.19"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.29.19.tgz#49ccbd0606633d1e55baf3b91ab7cc7aef411b1d"
-  integrity sha512-uPe1DukeIpIHpQi6UzIgBcXsjjsDaLnc7hF+zLBKnaUlh7jFE/A+P8t4cU4VzKPMFB/C970n/9SxtpO5hmIRgw==
+"@tanstack/query-core@4.29.23":
+  version "4.29.23"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.29.23.tgz#a38f0efcc4abd5849222a7f382ce3a19a9efb070"
+  integrity sha512-4BMHPrkfYmLP+NvqbbkV7Mk1nnphu+bNmxhhuB0+EMjKA7VfyFCfiyiTf55RRDgLaevyb9LrFK16lHW2owF52w==
 
-"@tanstack/query-persist-client-core@4.29.19":
-  version "4.29.19"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-persist-client-core/-/query-persist-client-core-4.29.19.tgz#c0cd03eca74d33e5aa40c95cadd5585620ff2320"
-  integrity sha512-rr6p3xwEZCz3cEDZsj3QGePf6PG44WxRUGQVcm2JFPZOq9TkG/0i5+hQ3STiHm1Fj6qwCH8xIi62L8kG0zRj/Q==
+"@tanstack/query-persist-client-core@4.29.23":
+  version "4.29.23"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-persist-client-core/-/query-persist-client-core-4.29.23.tgz#5085646b7fb4ba55a0ec96bb786c157d5ea50cc8"
+  integrity sha512-u0P6y4DPeXeHEZnj0LEnhcgqX8x7iV7xbUDuoRPItUYsPn+anyLjXG3d3622+wLP3XKdevff0PhXkA7j9ZOWKg==
   dependencies:
-    "@tanstack/query-core" "4.29.19"
+    "@tanstack/query-core" "4.29.23"
 
 "@tanstack/query-sync-storage-persister@^4.27.1":
-  version "4.29.19"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-sync-storage-persister/-/query-sync-storage-persister-4.29.19.tgz#292d33cdc9b38b11127f2f07b1935a73039cbba4"
-  integrity sha512-B3wDl3D3YBFTlY2yeXecEh4NEG/8Hr8pqsxnWJijRwBqvOKlqD4bUgk5kl5nbn1mShD2vnQ+yvH900/11X29Zw==
+  version "4.29.23"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-sync-storage-persister/-/query-sync-storage-persister-4.29.23.tgz#f2726643082af56881959f73beeb6a119b727e96"
+  integrity sha512-1mQJ2y3Fg1dQgfgyQakCL7fNFvewyqKxOPGRwv3jkqjaWSq6k9KUeIRc5KwtSRw5bwO2o8VWirsMmQOhK5cMAg==
   dependencies:
-    "@tanstack/query-persist-client-core" "4.29.19"
+    "@tanstack/query-persist-client-core" "4.29.23"
 
 "@tanstack/react-query-persist-client@^4.28.0":
-  version "4.29.19"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query-persist-client/-/react-query-persist-client-4.29.19.tgz#27b24ec5c8983894d6f23450e2f922d07f47706f"
-  integrity sha512-LfcasTosdnI9K66HTP0Rk72Ypza3tCgrcF9bc2qFlKsBleYOYo8bz7/GiiOHj1SQH4GRQlKB+P4+/it+qlJg4g==
+  version "4.29.23"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query-persist-client/-/react-query-persist-client-4.29.23.tgz#7f0ef4fff4251d220f5e692e30d9369e660d5b14"
+  integrity sha512-P23y5CMGfSM943pJoQjjOdQXSHH/ohjAl8vhQp+40M4Nz3lDq2d39flGRpajyh4dl4C5s0R8V6Iii7kkIQo8Jg==
   dependencies:
-    "@tanstack/query-persist-client-core" "4.29.19"
+    "@tanstack/query-persist-client-core" "4.29.23"
 
 "@tanstack/react-query@^4.28.0":
-  version "4.29.19"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.29.19.tgz#6ba187f2d0ea36ae83ff1f67068f53c88ce7b228"
-  integrity sha512-XiTIOHHQ5Cw1WUlHaD4fmVUMhoWjuNJlAeJGq7eM4BraI5z7y8WkZO+NR8PSuRnQGblpuVdjClQbDFtwxTtTUw==
+  version "4.29.23"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.29.23.tgz#aee47562a59c1dc0f69a9e3abc5ece8a3afb9e32"
+  integrity sha512-u59dPBJHeyeRDSrHN3M8FT65yZDT0uPlaFDFd4K2wmDreHguRlk9t578X+cp1Cj+4oksQCE+wv09A5ZH7Odx6g==
   dependencies:
-    "@tanstack/query-core" "4.29.19"
+    "@tanstack/query-core" "4.29.23"
     use-sync-external-store "^1.2.0"
 
 "@types/connect@^3.4.33":
@@ -2509,9 +2516,9 @@ camelcase@^5.0.0:
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
 caniuse-lite@^1.0.30001406:
-  version "1.0.30001515"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001515.tgz#418aefeed9d024cd3129bfae0ccc782d4cb8f12b"
-  integrity sha512-eEFDwUOZbE24sb+Ecsx3+OvNETqjWIdabMy52oOkIgcUtAsQifjUG9q4U9dgTHJM2mfk4uEPxc0+xuFdJ629QA==
+  version "1.0.30001516"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001516.tgz#621b1be7d85a8843ee7d210fd9d87b52e3daab3a"
+  integrity sha512-Wmec9pCBY8CWbmI4HsjBeQLqDTqV91nFVR83DnZpYyRnPI1wePDsTg0bGLPC5VU/3OIZV1fmxEea1b+tFKe86g==
 
 chalk@^2.0.0:
   version "2.4.2"
@@ -3052,9 +3059,9 @@ eslint-plugin-react@^7.31.7:
     string.prototype.matchall "^4.0.8"
 
 eslint-scope@^7.2.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-7.2.0.tgz#f21ebdafda02352f103634b96dd47d9f81ca117b"
-  integrity sha512-DYj5deGlHBfMt15J7rdtyKNq/Nqlv5KfU4iodrQ019XESsRnwXH9KAE0y3cwtUHDo2ob7CypAnCqefh6vioWRw==
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-7.2.1.tgz#936821d3462675f25a18ac5fd88a67cc15b393bd"
+  integrity sha512-CvefSOsDdaYYvxChovdrPo/ZGt8d5lrJWleAc1diXRKhHGiTYEI26cvo8Kle/wGnsizoCJjK73FMg1/IkIwiNA==
   dependencies:
     esrecurse "^4.3.0"
     estraverse "^5.2.0"
@@ -3110,9 +3117,9 @@ eslint@8.44.0:
     text-table "^0.2.0"
 
 espree@^9.6.0:
-  version "9.6.0"
-  resolved "https://registry.yarnpkg.com/espree/-/espree-9.6.0.tgz#80869754b1c6560f32e3b6929194a3fe07c5b82f"
-  integrity sha512-1FH/IiruXZ84tpUlm0aCUEwMl2Ho5ilqVh0VvQXw+byAz/4SAciyHLlfmL5WYqsvD38oymdUwBss0LtK8m4s/A==
+  version "9.6.1"
+  resolved "https://registry.yarnpkg.com/espree/-/espree-9.6.1.tgz#a2a17b8e434690a5432f2f8018ce71d331a48c6f"
+  integrity sha512-oruZaFkjorTpF32kDSI5/75ViwGeZginGGy2NoOSg3Q9bnwlnmDm4HLnkl0RE3n+njDXR037aY1+x58Z/zFdwQ==
   dependencies:
     acorn "^8.9.0"
     acorn-jsx "^5.3.2"
@@ -3361,9 +3368,9 @@ for-each@^0.3.3:
     is-callable "^1.1.3"
 
 framer-motion@^10.12.20:
-  version "10.12.20"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.12.20.tgz#dce81636404cf3f7f5446b90e08be2625813c022"
-  integrity sha512-O4ODHTlov2cGHWjtMSuZhm2wX0eM33VK8+vCxren2uw9g3k/RubPCa0/tT6PtLzCvYgAhgKmaczVbY2qEJVWOw==
+  version "10.12.21"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.12.21.tgz#ea36b8db4dbb561d5fac7a978c2cd467f6d39a1b"
+  integrity sha512-EmnP73O5+1OGm2jtQNoBPPuAJvhySl+p4/9PL7PPJHt58nkPWeFaxhCJaUDXDf6N3jSLluefxopc0FrMCQ+/tQ==
   dependencies:
     tslib "^2.4.0"
   optionalDependencies:
@@ -5375,9 +5382,9 @@ valtio@1.10.6:
     use-sync-external-store "1.2.0"
 
 viem@^1.0.0, viem@^1.2.9:
-  version "1.2.14"
-  resolved "https://registry.yarnpkg.com/viem/-/viem-1.2.14.tgz#f3d3f2262c420336a1aa453f50e1d8b1834df289"
-  integrity sha512-Hak+NGxdm+vRyt/cV8NbTlW1IRPKAmJBCx1SZZIc1uNVA/Rs6eN0Nh7mB8MbmA3FLJ0ymD/dSbB4MI9GGbGCgA==
+  version "1.2.15"
+  resolved "https://registry.yarnpkg.com/viem/-/viem-1.2.15.tgz#2a1ebef224097aa2b4f093c8614793c111574453"
+  integrity sha512-M67YS3WQC/3vx12TvYxt9dlxqHjgXIwblyUdy7E6cZ2MNtyoSvq9HgkacfY0+SDZAbisVsUX8mi9Lb1bB5pUAQ==
   dependencies:
     "@adraffy/ens-normalize" "1.9.0"
     "@noble/curves" "1.0.0"

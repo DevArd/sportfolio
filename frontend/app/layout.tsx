@@ -10,13 +10,14 @@ import {
 import '@rainbow-me/rainbowkit/styles.css';
 import {
   getDefaultWallets,
+  lightTheme,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import Navbar from '@/components/navbar';
 import { Box, ChakraProvider, Flex, Spacer } from '@chakra-ui/react';
-import { navMaxHeight, sportfolioTheme } from '../utils/sportfolioTheme';
+import { colors, myRainbowKitTheme, navMaxHeight, sportfolioTheme } from '../utils/sportfolioTheme';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 
@@ -62,7 +63,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider chains={chains}>
+          <RainbowKitProvider chains={chains} theme={myRainbowKitTheme}>
             <ChakraProvider theme={sportfolioTheme}>
               <Box as="header" position="fixed" zIndex={2}>
                 <Navbar />

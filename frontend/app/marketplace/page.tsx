@@ -25,7 +25,7 @@ export default function Page() {
                     <TabPanel key={index}>
                         <Wrap spacing='5'>
                             {talents.filter(x => x.sport === sport.label || sport.label === 'All').sort((a, b) => a.name.localeCompare(b.name)).map((talent, index) => (
-                                <TalentCard key={index} {...talent} />
+                                <TalentCard key={index} talent={talent} />
                             ))}
                         </Wrap>
                     </TabPanel>

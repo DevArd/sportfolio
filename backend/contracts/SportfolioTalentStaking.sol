@@ -18,21 +18,21 @@ contract SportfolioTalentStaking is Ownable {
         uint256 duration; // Duration of rewards to be paid out (in seconds)
         uint256 startAt; // Minimum of last updated time and reward finish time
         uint256 finishAt; // Timestamp of when the rewards finish
-        uint256 reward; // Rewards to be claimed from staking
-        uint256 rewardPerTokenPaid; // Reward per token paid from staking
+        uint256 rewards; // Rewards to be claimed from staking
+        uint256 rewardsPerTokenPaid; // Reward per token paid from staking
         bool isActive; // If the address stake
     }
 
-    // Timestamp of when the rewards finish
-    uint256 public rewardsDuration = 30 days;
-    // Minimum of last updated time and reward finish time
-    uint256 public lastUpdateTime;
-    // ???
-    uint256 public periodFinish = 0;
+    // Duration of the rewards period
+    uint256 public rewardsPeriodDuration = 7 days;
     // Reward to be paid out per second
     uint256 public rewardRate = 0;
+    // Minimum of last updated time and reward finish time
+    uint256 public lastUpdateTime;
+    // Timestamp of when the rewards finish
+    uint256 public rewardsPeriodFinishAt = 0;
     // Sum of (reward rate * dt * 1e18 / total supply)
-    uint256 public rewardPerTokenStaked;
+    uint256 public rewardsPerTokenStaked;
 
     // Fee percentage on stake and unstake operations
     uint256 private constant REWARD_FEE_PERCENTAGE = 2;
@@ -49,6 +49,7 @@ contract SportfolioTalentStaking is Ownable {
     event RewardClaimed(address indexed staker, uint256 reward);
     event RewardsDurationUpdated(uint256 newDuration);
     event RewardFeesClaimed(uint256 fees);
+    event Recovered(address token, uint256 amount);
 
     constructor(address _talentToken, address _usdcToken) {
         sportfolioTalentToken = IERC20(_talentToken);
@@ -58,13 +59,13 @@ contract SportfolioTalentStaking is Ownable {
     /* ========== MODIFIERS ========== */
 
     modifier updateReward(address _account) {
-        rewardPerTokenStaked = rewardPerToken();
+        rewardsPerTokenStaked = rewardPerToken();
         lastUpdateTime = lastTimeRewardApplicable();
 
         Staking storage staking = _stakingBalances[_account];
         if (staking.isActive) {
-            staking.reward = earned(_account);
-            staking.rewardPerTokenPaid = rewardPerTokenStaked;
+            staking.rewards = earned(_account);
+            staking.rewardsPerTokenPaid = rewardsPerTokenStaked;
         }
 
         _;
@@ -91,23 +92,23 @@ contract SportfolioTalentStaking is Ownable {
                 .amount
                 .mul(
                     rewardPerToken().sub(
-                        _stakingBalances[account].rewardPerTokenPaid
+                        _stakingBalances[account].rewardsPerTokenPaid
                     )
                 )
                 .div(1e18)
-                .add(_stakingBalances[account].reward);
+                .add(_stakingBalances[account].rewards);
     }
 
     function rewardForDuration() external view returns (uint256) {
-        return rewardRate.mul(rewardsDuration);
+        return rewardRate.mul(rewardsPeriodDuration);
     }
 
     function rewardPerToken() public view returns (uint256) {
         if (_totalStake == 0) {
-            return rewardPerTokenStaked;
+            return rewardsPerTokenStaked;
         }
         return
-            rewardPerTokenStaked.add(
+            rewardsPerTokenStaked.add(
                 lastTimeRewardApplicable()
                     .sub(lastUpdateTime)
                     .mul(rewardRate)
@@ -117,7 +118,10 @@ contract SportfolioTalentStaking is Ownable {
     }
 
     function lastTimeRewardApplicable() public view returns (uint256) {
-        return block.timestamp < periodFinish ? block.timestamp : periodFinish;
+        return
+            block.timestamp < rewardsPeriodFinishAt
+                ? block.timestamp
+                : rewardsPeriodFinishAt;
     }
 
     /* ========== MUTATIVE FUNCTIONS ========== */
@@ -135,6 +139,7 @@ contract SportfolioTalentStaking is Ownable {
         if (staking.isActive) {
             // Already staking
             staking.duration = staking.duration.add(duration);
+            staking.finishAt = staking.finishAt.add(duration);
             staking.amount = staking.duration.add(amount);
         } else {
             // new staker
@@ -164,9 +169,9 @@ contract SportfolioTalentStaking is Ownable {
         isStaker(msg.sender)
     {
         Staking storage staking = _stakingBalances[msg.sender];
-        uint256 rewards = staking.reward;
+        uint256 rewards = staking.rewards;
         if (rewards > 0) {
-            staking.reward = 0;
+            staking.rewards = 0;
 
             uint256 feeAmount = (rewards * REWARD_FEE_PERCENTAGE) / 100;
             uint256 netAmount = rewards - feeAmount;
@@ -193,12 +198,12 @@ contract SportfolioTalentStaking is Ownable {
         // First claim reward
         claimReward();
 
+        staking.amount = staking.duration.sub(amount);
+
+        // Total withdraw
         if (staking.amount == amount) {
-            // Total withdraw
-            delete _stakingBalances[msg.sender];
-        } else {
-            // Partial withdraw
-            staking.amount = staking.duration.sub(amount);
+            staking.isActive = false;
+            staking.finishAt = block.timestamp;
         }
 
         _totalStake = _totalStake.sub(amount);
@@ -208,6 +213,58 @@ contract SportfolioTalentStaking is Ownable {
     }
 
     /* ========== RESTRICTED FUNCTIONS ========== */
+
+    function addRewardAmount(
+        uint256 reward
+    ) external onlyOwner updateReward(address(0)) {
+        if (block.timestamp >= rewardsPeriodFinishAt) {
+            rewardRate = reward.div(rewardsPeriodDuration);
+        } else {
+            uint256 remaining = rewardsPeriodFinishAt.sub(block.timestamp);
+            uint256 leftover = remaining.mul(rewardRate);
+            rewardRate = reward.add(leftover).div(rewardsPeriodDuration);
+        }
+
+        // Ensure the provided reward amount is not more than the balance in the contract.
+        // This keeps the reward rate in the right range, preventing overflows due to
+        // very high values of rewardRate in the earned and rewardsPerToken functions;
+        // Reward + leftover must be less than 2^256 / 10^18 to avoid overflow.
+        uint256 balance = usdcRewardsToken.balanceOf(address(this));
+        require(
+            rewardRate <= balance.div(rewardsPeriodDuration),
+            "Provided reward too high"
+        );
+
+        lastUpdateTime = block.timestamp;
+        rewardsPeriodFinishAt = block.timestamp.add(rewardsPeriodDuration);
+        emit RewardAdded(reward);
+    }
+
+    // Added to support recovering ERC20
+    function recoverERC20(
+        address tokenAddress,
+        uint256 tokenAmount
+    ) external onlyOwner {
+        require(
+            tokenAddress != address(sportfolioTalentToken),
+            "Cannot withdraw the staking token"
+        );
+        require(
+            tokenAddress != address(usdcRewardsToken),
+            "Cannot withdraw the reward token"
+        );
+        IERC20(tokenAddress).safeTransfer(msg.sender, tokenAmount);
+        emit Recovered(tokenAddress, tokenAmount);
+    }
+
+    function setRewardsDuration(uint256 duration) external onlyOwner {
+        require(
+            block.timestamp > rewardsPeriodFinishAt,
+            "Previous rewards period must be complete before changing the duration for the new period"
+        );
+        rewardsPeriodDuration = duration;
+        emit RewardsDurationUpdated(rewardsPeriodDuration);
+    }
 
     function withdrawFees() external onlyOwner {
         uint256 balance = _totalFees;

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -43,9 +43,9 @@ contract SportfolioTalentStaking is Ownable {
     // Fee percentage on stake and unstake operations
     uint256 private constant REWARD_FEE_PERCENTAGE = 2;
     // Total staked
-    uint256 private _totalStake;
+    uint256 private _totalStake = 0;
     // Total fees
-    uint256 private _totalFees;
+    uint256 private _totalFees = 0;
     // User address => staking
     mapping(address => Staking) private _stakingBalances;
 

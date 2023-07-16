@@ -6,9 +6,15 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
+/**
+ * @title SportfolioTalentStaking
+ * @dev Contract for staking and earning rewards in USDC by staking Sportfolio Talent Tokens (representative tokens for athletes).
+ */
 contract SportfolioTalentStaking is Ownable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
+
+    /* ========== STATE VARIABLES ========== */
 
     IERC20 public immutable sportfolioTalentToken;
     IERC20 public immutable usdcRewardsToken;
@@ -20,10 +26,10 @@ contract SportfolioTalentStaking is Ownable {
         uint256 finishAt; // Timestamp of when the rewards finish
         uint256 rewards; // Rewards to be claimed from staking
         uint256 rewardsPerTokenPaid; // Reward per token paid from staking
-        bool isActive; // If the address stake
+        bool isActive; // If the address has an active stake
     }
 
-    // Duration of the rewards period
+    // Duration in seconds of the rewards period
     uint256 public rewardsPeriodDuration = 7 days;
     // Reward to be paid out per second
     uint256 public rewardRate = 0;
@@ -43,6 +49,8 @@ contract SportfolioTalentStaking is Ownable {
     // User address => staking
     mapping(address => Staking) private _stakingBalances;
 
+    /* ========== EVENTS ========== */
+
     event Staked(address indexed staker, uint256 amount, uint256 duration);
     event Unstaked(address indexed unstaker, uint256 amount);
     event RewardAdded(uint256 reward);
@@ -51,6 +59,13 @@ contract SportfolioTalentStaking is Ownable {
     event RewardFeesClaimed(uint256 fees);
     event Recovered(address token, uint256 amount);
 
+    /* ========== CONSTRUCTOR ========== */
+
+    /**
+     * @dev Constructs the SportfolioTalentStaking contract.
+     * @param _talentToken Address of the Sportfolio Talent Token.
+     * @param _usdcToken Address of the USDC token used for rewards.
+     */
     constructor(address _talentToken, address _usdcToken) {
         sportfolioTalentToken = IERC20(_talentToken);
         usdcRewardsToken = IERC20(_usdcToken);
@@ -63,7 +78,7 @@ contract SportfolioTalentStaking is Ownable {
         lastUpdateTime = lastTimeRewardApplicable();
 
         Staking storage staking = _stakingBalances[_account];
-        if (staking.isActive) {
+        if (staking.isActive && _account != address(0)) {
             staking.rewards = earned(_account);
             staking.rewardsPerTokenPaid = rewardsPerTokenStaked;
         }
@@ -78,14 +93,28 @@ contract SportfolioTalentStaking is Ownable {
 
     /* ========== VIEWS ========== */
 
+    /**
+     * @dev Get the total amount staked in the contract.
+     * @return The total staked amount.
+     */
     function totalStaked() external view returns (uint256) {
         return _totalStake;
     }
 
+    /**
+     * @dev Get the staked amount for a specific address.
+     * @param account Address of the staker.
+     * @return The staked amount for the address.
+     */
     function balanceOf(address account) external view returns (uint256) {
         return _stakingBalances[account].amount;
     }
 
+    /**
+     * @dev Get the earned rewards for a specific address.
+     * @param account Address of the staker.
+     * @return The earned rewards for the address.
+     */
     function earned(address account) public view returns (uint256) {
         return
             _stakingBalances[account]
@@ -99,10 +128,18 @@ contract SportfolioTalentStaking is Ownable {
                 .add(_stakingBalances[account].rewards);
     }
 
+    /**
+     * @dev Get the reward for the complete rewards period.
+     * @return The reward for the complete rewards period.
+     */
     function rewardForDuration() external view returns (uint256) {
         return rewardRate.mul(rewardsPeriodDuration);
     }
 
+    /**
+     * @dev Get the reward rate per token staked.
+     * @return The reward rate per token staked.
+     */
     function rewardPerToken() public view returns (uint256) {
         if (_totalStake == 0) {
             return rewardsPerTokenStaked;
@@ -117,6 +154,10 @@ contract SportfolioTalentStaking is Ownable {
             );
     }
 
+    /**
+     * @dev Get the last timestamp when the rewards were updated.
+     * @return The last timestamp when the rewards were updated.
+     */
     function lastTimeRewardApplicable() public view returns (uint256) {
         return
             block.timestamp < rewardsPeriodFinishAt
@@ -126,11 +167,17 @@ contract SportfolioTalentStaking is Ownable {
 
     /* ========== MUTATIVE FUNCTIONS ========== */
 
+    /**
+     * @dev Stake Sportfolio Talent Tokens and start earning rewards.
+     * @param amount The amount of Sportfolio Talent Tokens to stake.
+     * @param duration The duration of rewards to be paid out (in seconds).
+     */
     function stake(
         uint256 amount,
         uint256 duration
     ) external updateReward(msg.sender) {
         require(amount > 0, "Amount must be greater than zero");
+        require(duration > 0, "Duration must be greater than zero");
 
         _totalStake = _totalStake.add(amount);
 
@@ -147,7 +194,7 @@ contract SportfolioTalentStaking is Ownable {
                 amount,
                 duration,
                 block.timestamp,
-                block.timestamp + duration,
+                block.timestamp.add(duration),
                 0,
                 rewardPerToken(),
                 true
@@ -163,6 +210,9 @@ contract SportfolioTalentStaking is Ownable {
         emit Staked(msg.sender, amount, duration);
     }
 
+    /**
+     * @dev Claim rewards for staking Sportfolio Talent Tokens.
+     */
     function claimReward()
         public
         updateReward(msg.sender)
@@ -173,8 +223,8 @@ contract SportfolioTalentStaking is Ownable {
         if (rewards > 0) {
             staking.rewards = 0;
 
-            uint256 feeAmount = (rewards * REWARD_FEE_PERCENTAGE) / 100;
-            uint256 netAmount = rewards - feeAmount;
+            uint256 feeAmount = rewards.mul(REWARD_FEE_PERCENTAGE).div(100);
+            uint256 netAmount = rewards.sub(feeAmount);
             _totalFees = _totalFees.add(feeAmount);
 
             usdcRewardsToken.safeTransfer(msg.sender, netAmount);
@@ -182,14 +232,19 @@ contract SportfolioTalentStaking is Ownable {
         }
     }
 
+    /**
+     * @dev Unstake Sportfolio Talent Tokens and claim the rewards.
+     * @param amount The amount of Sportfolio Talent Tokens to unstake.
+     */
     function unstake(
         uint256 amount
     ) external updateReward(msg.sender) isStaker(msg.sender) {
         require(amount > 0, "Amount must be greater than zero");
 
         Staking storage staking = _stakingBalances[msg.sender];
-
         require(staking.amount >= amount, "Not enough staked tokens");
+
+        // Ensure the staking period is completed
         require(
             block.timestamp >= staking.finishAt,
             "Staking period not completed"
@@ -198,15 +253,16 @@ contract SportfolioTalentStaking is Ownable {
         // First claim reward
         claimReward();
 
+        // Reduce the staked amount
         staking.amount = staking.duration.sub(amount);
+        _totalStake = _totalStake.sub(amount);
 
-        // Total withdraw
-        if (staking.amount == amount) {
+        // If the total staked amount becomes zero, deactivate staking
+        if (staking.amount == 0) {
             staking.isActive = false;
-            staking.finishAt = block.timestamp;
         }
 
-        _totalStake = _totalStake.sub(amount);
+        // Transfer the staked tokens back to the user
         sportfolioTalentToken.safeTransfer(msg.sender, amount);
 
         emit Unstaked(msg.sender, amount);
@@ -214,12 +270,20 @@ contract SportfolioTalentStaking is Ownable {
 
     /* ========== RESTRICTED FUNCTIONS ========== */
 
+    /**
+     * @dev Add rewards to the contract.
+     * @param reward The amount of rewards to add.
+     */
     function addRewardAmount(
         uint256 reward
     ) external onlyOwner updateReward(address(0)) {
+        require(reward > 0, "Reward must be greater than zero");
+
         if (block.timestamp >= rewardsPeriodFinishAt) {
+            // Current period not rewarded
             rewardRate = reward.div(rewardsPeriodDuration);
         } else {
+            // Current reward period
             uint256 remaining = rewardsPeriodFinishAt.sub(block.timestamp);
             uint256 leftover = remaining.mul(rewardRate);
             rewardRate = reward.add(leftover).div(rewardsPeriodDuration);
@@ -232,7 +296,7 @@ contract SportfolioTalentStaking is Ownable {
         uint256 balance = usdcRewardsToken.balanceOf(address(this));
         require(
             rewardRate <= balance.div(rewardsPeriodDuration),
-            "Provided reward too high"
+            "Not enough balance for the provided reward"
         );
 
         lastUpdateTime = block.timestamp;
@@ -240,7 +304,11 @@ contract SportfolioTalentStaking is Ownable {
         emit RewardAdded(reward);
     }
 
-    // Added to support recovering ERC20
+    /**
+     * @dev Recover ERC20 tokens accidentally sent to the contract (excluding staking and reward tokens).
+     * @param tokenAddress Address of the ERC20 token to recover.
+     * @param tokenAmount Amount of the ERC20 token to recover.
+     */
     function recoverERC20(
         address tokenAddress,
         uint256 tokenAmount
@@ -257,6 +325,10 @@ contract SportfolioTalentStaking is Ownable {
         emit Recovered(tokenAddress, tokenAmount);
     }
 
+    /**
+     * @dev Set the duration of the rewards period.
+     * @param duration The new duration of the rewards period (in seconds).
+     */
     function setRewardsDuration(uint256 duration) external onlyOwner {
         require(
             block.timestamp > rewardsPeriodFinishAt,
@@ -266,6 +338,9 @@ contract SportfolioTalentStaking is Ownable {
         emit RewardsDurationUpdated(rewardsPeriodDuration);
     }
 
+    /**
+     * @dev Withdraw accumulated fees from the contract.
+     */
     function withdrawFees() external onlyOwner {
         uint256 balance = _totalFees;
         require(balance > 0, "No fees to withdraw");

@@ -220,16 +220,16 @@ contract SportfolioTalentStaking is Ownable {
     {
         Staking storage staking = _stakingBalances[msg.sender];
         uint256 rewards = staking.rewards;
-        if (rewards > 0) {
-            staking.rewards = 0;
+        require(rewards > 0, "Not yet eligible to claim reward");
 
-            uint256 feeAmount = rewards.mul(REWARD_FEE_PERCENTAGE).div(100);
-            uint256 netAmount = rewards.sub(feeAmount);
-            _totalFees = _totalFees.add(feeAmount);
+        staking.rewards = 0;
 
-            usdcRewardsToken.safeTransfer(msg.sender, netAmount);
-            emit RewardClaimed(msg.sender, netAmount);
-        }
+        uint256 feeAmount = rewards.mul(REWARD_FEE_PERCENTAGE).div(100);
+        uint256 netAmount = rewards.sub(feeAmount);
+        _totalFees = _totalFees.add(feeAmount);
+
+        usdcRewardsToken.safeTransfer(msg.sender, netAmount);
+        emit RewardClaimed(msg.sender, netAmount);
     }
 
     /**

@@ -9,9 +9,8 @@ const axios = require("axios");
 require("dotenv").config();
 
 const UNISWAP_V2_FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
-
-const usdcAddress = '0x9E3dda3Ec8ea621a0036027dc6C63D63394B24F0'
-const sportfolioTokenAddress = '0x2e38c13b8657aA3ddEE317a5De4ca7B99c4704Bb'
+const USDC_ADDRESS = '0x9E3dda3Ec8ea621a0036027dc6C63D63394B24F0'
+const MESSI_ADDRESS = '0x2e38c13b8657aA3ddEE317a5De4ca7B99c4704Bb'
 
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || ""
 const GEORLI_PROVIDER = process.env.GEORLI_PROVIDER || ""
@@ -34,8 +33,8 @@ async function main() {
 
   // Create the pool
   const tx = await factoryContractWithSigner.createPair(
-    usdcAddress,
-    sportfolioTokenAddress
+    USDC_ADDRESS,
+    MESSI_ADDRESS
   )
 
   // Wait creation
@@ -43,7 +42,7 @@ async function main() {
   console.log("receipt", receipt);
 
   // Check pool address
-  console.log("Successfuly created Uniswap liquidity pools :", await factoryContract.getPair(usdcAddress, sportfolioTokenAddress));
+  console.log("Successfuly created Uniswap liquidity pools :", await factoryContract.getPair(USDC_ADDRESS, MESSI_ADDRESS));
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -28,7 +28,7 @@ async function deploySportfolioStakingFixture() {
     const stakingContractAddress = await stakingContract.getAddress();
 
     // Mint tests tokens
-    await usdcRewardsToken.connect(owner).mint(stakingContractAddress, amount * BigInt(1000));
+    await usdcRewardsToken.connect(owner).mint(stakingContractAddress, amount * BigInt(1_000_000));
     await sportfolioTalentToken.connect(owner).mint(owner.address, amount);
     await sportfolioTalentToken.connect(owner).mint(staker.address, amount);
 

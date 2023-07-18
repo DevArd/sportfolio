@@ -2,6 +2,7 @@ require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 require("hardhat-docgen");
 require("hardhat-gas-reporter");
+require('solidity-coverage')
 
 const WALLET_PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY || ""
 const HARDHAT_PRIVATE_KEY_1 = process.env.HARDHAT_PRIVATE_KEY_1 || ""
@@ -15,7 +16,8 @@ module.exports = {
     localhost: {
       url: "http://127.0.0.1:8545",
       accounts: [HARDHAT_PRIVATE_KEY_1, HARDHAT_PRIVATE_KEY_2],
-      chainId: 31337
+      chainId: 31337,
+      // blockGasLimit: 10000000000000
     },
     sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
@@ -27,6 +29,10 @@ module.exports = {
       accounts: [WALLET_PRIVATE_KEY],
       chainId: 5
     }
+  },
+  gasReporter: {
+    currency: 'USD',
+    gasPrice: 21
   },
   docgen: {
     path: './docs',

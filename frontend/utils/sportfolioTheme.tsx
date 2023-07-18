@@ -1,5 +1,5 @@
 import { extendTheme } from '@chakra-ui/react'
-import { RainbowKitProvider, Theme, lightTheme } from '@rainbow-me/rainbowkit';
+import { Theme, lightTheme } from '@rainbow-me/rainbowkit';
 import merge from 'lodash.merge';
 import { defineStyle, defineStyleConfig } from '@chakra-ui/react'
 

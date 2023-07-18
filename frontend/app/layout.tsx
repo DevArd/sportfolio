@@ -2,7 +2,6 @@
 
 import { Inter } from 'next/font/google'
 import {
-  mainnet,
   goerli,
   sepolia,
   hardhat
@@ -10,16 +9,17 @@ import {
 import '@rainbow-me/rainbowkit/styles.css';
 import {
   getDefaultWallets,
-  lightTheme,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
-import Navbar from '@/components/navbar';
-import { Box, ChakraProvider, Flex, Spacer } from '@chakra-ui/react';
-import { colors, myRainbowKitTheme, navMaxHeight, sportfolioTheme } from '../utils/sportfolioTheme';
+import { ChakraProvider, } from '@chakra-ui/react';
+import { myRainbowKitTheme, sportfolioTheme } from '../utils/sportfolioTheme';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { infuraProvider } from 'wagmi/providers/infura'
+import App from './app';
+require("dotenv").config();
 
 library.add(fas)
 
@@ -31,9 +31,10 @@ export const metadata = {
 }
 
 const { chains, publicClient } = configureChains(
-  [mainnet, goerli, sepolia, hardhat],
+  [goerli, sepolia, hardhat],
   [
-    publicProvider()
+    publicProvider(),
+    infuraProvider({ apiKey: `${process.env.INFURA_API_KEY}` }),
   ]
 );
 
@@ -54,6 +55,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
     <html lang="en">
       <head>
@@ -65,16 +67,7 @@ export default function RootLayout({
         <WagmiConfig config={wagmiConfig}>
           <RainbowKitProvider chains={chains} theme={myRainbowKitTheme}>
             <ChakraProvider theme={sportfolioTheme}>
-              <Box as="header" position="fixed" zIndex={2}>
-                <Navbar />
-              </Box>
-              <Flex as="main" w={'100%'} zIndex={1} bgGradient='linear(#edf2f7 10%, white 50%)'>
-                <Spacer minW={'10%'} />
-                <Box mt={navMaxHeight} >
-                  {children}
-                </Box>
-                <Spacer minW={'10%'} />
-              </Flex>
+              <App children={children} />
             </ChakraProvider>
           </RainbowKitProvider>
         </WagmiConfig>
@@ -82,3 +75,4 @@ export default function RootLayout({
     </html>
   )
 }
+

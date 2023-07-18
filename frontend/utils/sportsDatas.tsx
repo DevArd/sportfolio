@@ -10,11 +10,11 @@ export const sports: ISport[] = [
         selectedIcon: 'fa-solid fa-medal',
         unselectedIcon: 'fa-regular fa-medal',
     },
-    {
-        label: 'Dumbbell',
-        selectedIcon: 'fa-solid fa-dumbbell',
-        unselectedIcon: 'fa-regular fa-dumbbell',
-    },
+    // {
+    //     label: 'Dumbbell',
+    //     selectedIcon: 'fa-solid fa-dumbbell',
+    //     unselectedIcon: 'fa-regular fa-dumbbell',
+    // },
     {
         label: 'Swimming',
         selectedIcon: 'fa-solid fa-person-swimming',
@@ -50,11 +50,11 @@ export const sports: ISport[] = [
         selectedIcon: 'fa-solid fa-person-biking',
         unselectedIcon: 'fa-regular fa-person-biking',
     },
-    {
-        label: 'Running',
-        selectedIcon: 'fa-solid fa-person-running',
-        unselectedIcon: 'fa-regular fa-person-running',
-    },
+    // {
+    //     label: 'Running',
+    //     selectedIcon: 'fa-solid fa-person-running',
+    //     unselectedIcon: 'fa-regular fa-person-running',
+    // },
     {
         label: 'Basketball',
         selectedIcon: 'fa-solid fa-basketball',

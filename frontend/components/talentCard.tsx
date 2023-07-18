@@ -1,11 +1,10 @@
 import { ITalent } from '@/utils/talentsDatas'
-import { Card, Image, CardBody, Stack, Text, Heading, Stat, StatNumber, StatHelpText, StatArrow, Divider, CardFooter, Button, useDisclosure } from '@chakra-ui/react'
+import { Card, Image, CardBody, Stack, Text, Heading, Stat, StatNumber, StatHelpText, StatArrow, Divider, CardFooter, Button, useDisclosure, Center } from '@chakra-ui/react'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { sports } from '@/utils/sportsDatas'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import BuyModal from './buyModal'
-import { colors } from '@/utils/sportfolioTheme'
 
 export default function TalentCard(
     {
@@ -19,7 +18,7 @@ export default function TalentCard(
 
     return (
         <>
-            <Card maxW='sm' bg={'rgba(176, 25, 38, 0.05)'}>
+            <Card maxW='sm' bg={'rgba(176, 25, 38, 0.05)'} >
                 <CardBody>
                     <Image
                         src={talent.img}

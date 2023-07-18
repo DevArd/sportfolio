@@ -17,7 +17,11 @@ module.exports = {
       url: "http://127.0.0.1:8545",
       accounts: [HARDHAT_PRIVATE_KEY_1, HARDHAT_PRIVATE_KEY_2],
       chainId: 31337,
-      // blockGasLimit: 10000000000000
+      blockGasLimit: 10000000000000
+    },
+    hardhat: {
+      chainId: 1337,
+      blockGasLimit: 10000000000000
     },
     sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,

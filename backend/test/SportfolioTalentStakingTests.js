@@ -68,14 +68,14 @@ describe("SportfolioTalentStaking (View Functions)", function () {
     });
 
     it("should return the rewards earned by staker", async () => {
-        const { stakingContract, staker } = await loadFixture(deploySportfolioStakingFixture);
+        const { stakingContract, staker, owner } = await loadFixture(deploySportfolioStakingFixture);
 
         expect(await stakingContract.earned(staker.address)).to.equal(0);
 
         await stakingContract.connect(staker).stake(amount, duration);
 
         const rewardRate = ethers.parseEther("0.01"); // Reward rate of 0.01 USDC per second
-        await stakingContract.addRewardAmount(rewardRate * durationBN);
+        await stakingContract.connect(owner).addRewardAmount(rewardRate * durationBN);
 
         // Increase the time to the middle of the staking period
         await ethers.provider.send("evm_increaseTime", [duration / 2]);

@@ -11,11 +11,6 @@ export const sports: ISport[] = [
         unselectedIcon: 'fa-regular fa-medal',
     },
     {
-        label: 'Bicycle',
-        selectedIcon: 'fa-solid fa-bicycle',
-        unselectedIcon: 'fa-regular fa-bicycle',
-    },
-    {
         label: 'Dumbbell',
         selectedIcon: 'fa-solid fa-dumbbell',
         unselectedIcon: 'fa-regular fa-dumbbell',

@@ -68,7 +68,7 @@ export default function RootLayout({
               <Box as="header" position="fixed" zIndex={2}>
                 <Navbar />
               </Box>
-              <Flex as="main" w={'100%'} zIndex={1}>
+              <Flex as="main" w={'100%'} zIndex={1} bgGradient='linear(#edf2f7 10%, white 50%)'>
                 <Spacer minW={'10%'} />
                 <Box mt={navMaxHeight} >
                   {children}

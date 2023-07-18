@@ -19,7 +19,7 @@ export default function TalentCard(
 
     return (
         <>
-            <Card maxW='sm'>
+            <Card maxW='sm' bg={'rgba(176, 25, 38, 0.05)'}>
                 <CardBody>
                     <Image
                         src={talent.img}

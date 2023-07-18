@@ -8,7 +8,7 @@ export default function Navbar() {
     return (
         <Flex w='100%' position="fixed" bg={'brand.50'}>
             <Box w='200px' maxHeight={navMaxHeight} ml='4'>
-                <Image src='logo.png' alt='Sportfolio' maxHeight={navMaxHeight} />
+                <Link as={NextLink} href='/marketplace'><Image src='logo.png' alt='Sportfolio' maxHeight={navMaxHeight} /></Link>
             </Box>
             <Spacer />
             <Stack direction={'row'}>

@@ -19,10 +19,10 @@ module.exports = {
       chainId: 31337,
       blockGasLimit: 10000000000000
     },
-    hardhat: {
-      chainId: 1337,
-      blockGasLimit: 10000000000000
-    },
+    // // Uncomment for coverage
+    // hardhat: {
+    //   blockGasLimit: 10000000000000
+    // },
     sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [WALLET_PRIVATE_KEY],
@@ -35,6 +35,7 @@ module.exports = {
     }
   },
   gasReporter: {
+    enabled: true,
     currency: 'USD',
     gasPrice: 21
   },

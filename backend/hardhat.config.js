@@ -3,7 +3,7 @@ require("dotenv").config();
 require("hardhat-docgen");
 require("hardhat-gas-reporter");
 
-const SEPOLIA_PRIVATE_KEY = process.env.SEPOLIA_PRIVATE_KEY || ""
+const WALLET_PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY || ""
 const HARDHAT_PRIVATE_KEY_1 = process.env.HARDHAT_PRIVATE_KEY_1 || ""
 const HARDHAT_PRIVATE_KEY_2 = process.env.HARDHAT_PRIVATE_KEY_2 || ""
 const INFURA_API_KEY = process.env.INFURA_API_KEY || ""
@@ -19,8 +19,13 @@ module.exports = {
     },
     sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
-      accounts: [SEPOLIA_PRIVATE_KEY],
+      accounts: [WALLET_PRIVATE_KEY],
       chainId: 11155111
+    },
+    goerli: {
+      url: `https://goerli.infura.io/v3/${INFURA_API_KEY}`,
+      accounts: [WALLET_PRIVATE_KEY],
+      chainId: 5
     }
   },
   docgen: {
@@ -33,7 +38,8 @@ module.exports = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200
+        runs: 1000,
+        details: { yul: false }
       }
     }
   },

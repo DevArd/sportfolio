@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract FakeUSDC is ERC20, Ownable {
     constructor() ERC20("Fake USDC", "USDC") {
-        _mint(msg.sender, 1000000000 * 10 ** decimals());
+        _mint(msg.sender, 1_000_000_000 * 10 ** decimals());
     }
 
     function mint(address to, uint256 amount) public onlyOwner {

@@ -1,23 +1,18 @@
 "use client"
-import { MessiTokenAddress, MbappeTokenAddress } from '@/Constants'
+import StakingCard from '@/components/stakingCard'
+import { deadAddress, talents } from '@/utils/talentsDatas'
+import { Center } from '@chakra-ui/react'
 import React from 'react'
-import { useBalance, useAccount } from 'wagmi'
 
 export default function Page() {
-    const { address } = useAccount()
-    const balanceMessi = useBalance({
-        address: address,
-        token: MessiTokenAddress,
-    })
-    const balanceMBappe = useBalance({
-        address: address,
-        token: MbappeTokenAddress,
-    })
-
-    console.log('balanceMessi', balanceMessi)
-    console.log('balanceMBappe', balanceMBappe)
 
     return (
-        <div>portfolio</div>
+        <>
+            <Center>
+                {talents.filter(x => x.tokenAddress && x.tokenAddress != deadAddress).sort((a, b) => a.name.localeCompare(b.name)).map((sport, index) => (
+                    <StakingCard key={index} talent={sport} />
+                ))}
+            </Center>
+        </>
     )
 }

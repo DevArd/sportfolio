@@ -17,7 +17,7 @@ export const colors = {
 const solid = defineStyle({
   background: colors.brand.primary,
   borderRadius: 20,
-  color: colors.brand.background
+  color: colors.brand.background,
 })
 
 export const buttonTheme = defineStyleConfig({

@@ -45,7 +45,7 @@ const { connectors } = getDefaultWallets({
 });
 
 const wagmiConfig = createConfig({
-  autoConnect: false,
+  autoConnect: true,
   connectors,
   publicClient
 })
@@ -67,7 +67,7 @@ export default function RootLayout({
         <WagmiConfig config={wagmiConfig}>
           <RainbowKitProvider chains={chains} theme={myRainbowKitTheme}>
             <ChakraProvider theme={sportfolioTheme}>
-              <App children={children} />
+              <App>{children}</App>
             </ChakraProvider>
           </RainbowKitProvider>
         </WagmiConfig>

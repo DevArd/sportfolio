@@ -20,8 +20,16 @@ const solid = defineStyle({
   color: colors.brand.background,
 })
 
+const outline = defineStyle({
+  borderColor: colors.brand.secondary,
+  background: colors.brand.background,
+  borderRadius: 20,
+  color: colors.brand.secondary,
+})
+
+
 export const buttonTheme = defineStyleConfig({
-  variants: { solid },
+  variants: { solid, outline },
 })
 
 export const sportfolioTheme = extendTheme({ colors, components: { Button: buttonTheme }, })

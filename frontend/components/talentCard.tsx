@@ -45,7 +45,7 @@ export default function TalentCard(
                     <Stat>
                         <StatNumber>{talent.apy.toFixed(2)}% APY</StatNumber>
                     </Stat>
-                    <Button variant='solid' onClick={onOpen}>
+                    <Button variant='solid' colorScheme='transparent' onClick={onOpen}>
                         Buy now
                     </Button>
                 </CardFooter>

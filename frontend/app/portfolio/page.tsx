@@ -1,7 +1,8 @@
 "use client"
+import { deadAddress } from '@/Constants'
 import StakingCard from '@/components/stakingCard'
-import { deadAddress, talents } from '@/utils/talentsDatas'
-import { Center } from '@chakra-ui/react'
+import { talents } from '@/utils/talentsDatas'
+import { Center, Wrap } from '@chakra-ui/react'
 import React from 'react'
 
 export default function Page() {
@@ -9,9 +10,11 @@ export default function Page() {
     return (
         <>
             <Center>
-                {talents.filter(x => x.tokenAddress && x.tokenAddress != deadAddress).sort((a, b) => a.name.localeCompare(b.name)).map((sport, index) => (
-                    <StakingCard key={index} talent={sport} />
-                ))}
+                <Wrap spacing='5' justify='center'>
+                    {talents.filter(x => x.onChainDatas.tokenAddress != deadAddress).sort((a, b) => a.name.localeCompare(b.name)).map((sport, index) => (
+                        <StakingCard key={index} talent={sport} />
+                    ))}
+                </Wrap>
             </Center>
         </>
     )

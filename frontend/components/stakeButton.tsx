@@ -49,6 +49,8 @@ export default function StakeButton(
         }
     }, [isSuccess]);
 
+    // TODO ALLOWANCE
+
     return (
         <>
             <Button mr={'2'} variant='solid' colorScheme='transparent' onClick={onOpen} >

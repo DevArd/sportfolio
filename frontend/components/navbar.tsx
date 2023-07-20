@@ -7,8 +7,8 @@ import { navMaxHeight } from '@/utils/sportfolioTheme'
 export default function Navbar() {
     return (
         <Flex w='100%' position="fixed" bg={'brand.50'}>
-            <Box w='200px' maxHeight={navMaxHeight} ml='8'>
-                <Link as={NextLink} href='/marketplace'><Image src='logo.png' alt='Sportfolio' maxHeight={navMaxHeight} /></Link>
+            <Box maxHeight={navMaxHeight} ml='8'>
+                <Link as={NextLink} href='/marketplace'><Image objectFit='contain' src='logo.png' alt='Sportfolio' maxHeight={navMaxHeight} /></Link>
             </Box>
             <Spacer />
             <Stack direction={'row'}>

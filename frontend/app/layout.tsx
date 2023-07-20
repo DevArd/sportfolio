@@ -25,11 +25,6 @@ library.add(fas)
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
-  title: 'Sportfolio',
-  description: 'Talent markeplace for investors',
-}
-
 const { chains, publicClient } = configureChains(
   [goerli, sepolia, hardhat],
   [
@@ -40,7 +35,7 @@ const { chains, publicClient } = configureChains(
 
 const { connectors } = getDefaultWallets({
   appName: 'Sportfolio',
-  projectId: '58c04492c719d703985bce45898088b9',
+  projectId: `${process.env.WALLET_CONNECT_PROJECT_ID}`,
   chains
 });
 
@@ -62,6 +57,7 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width" />
         <title>Sportfolio - Talent markeplace for investors</title>
+        <link rel="icon" type="image/png" href="/icon.png" />
       </head>
       <body className={inter.className}>
         <WagmiConfig config={wagmiConfig}>

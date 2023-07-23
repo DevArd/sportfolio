@@ -49,7 +49,7 @@ async function main() {
     tx = await mbappeContract.connect(wallet).transfer(recipient.address, amount);
     receipt = await tx.wait();
     console.log("receipt transfert MBappeSportfolioToken", receipt);
-    console.log("Successfuly transafert");
+    console.log("Successfuly transfert");
 }
 
 // We recommend this pattern to be able to use async/await everywhere

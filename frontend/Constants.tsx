@@ -23,7 +23,7 @@ export const DefaultOnChainDatas: TalentOnChainDatas = {
 }
 
 export const MessiOnChainDatas: TalentOnChainDatas = {
-    tokenAddress: '0x40ED11741F5d7F8d97BF3535E3Ba2c8D755ad858',
+    tokenAddress: '0xea54bc2cC14A1036FbdA50Ad4CE647feBc7Bf695',
     tokenAbi: [
         {
             "inputs": [],
@@ -384,7 +384,7 @@ export const MessiOnChainDatas: TalentOnChainDatas = {
             "type": "function"
         }
     ],
-    stakingContractAddress: '0x060EBAA867de614FB4903F0da5f595fA01432A9E',
+    stakingContractAddress: '0x320823954BEe9b969A68cB00347Afdb03bC07829',
     stakingContractAbi: [
         {
             "inputs": [
@@ -862,7 +862,7 @@ export const MessiOnChainDatas: TalentOnChainDatas = {
 }
 
 export const MbappeOnChainDatas: TalentOnChainDatas = {
-    tokenAddress: '0x2e38c13b8657aA3ddEE317a5De4ca7B99c4704Bb',
+    tokenAddress: '0x972EDe4ed89e72911DFe9063540612199e993cF0',
     tokenAbi: [
         {
             "inputs": [],
@@ -1223,7 +1223,7 @@ export const MbappeOnChainDatas: TalentOnChainDatas = {
             "type": "function"
         }
     ],
-    stakingContractAddress: '0xf6aC1BCA0B5293ca0800025c775d1b1f78A1089d',
+    stakingContractAddress: '0xD1F496ca4b59C1b448Cb303C5067D790544FDB73',
     stakingContractAbi: [
         {
             "inputs": [
@@ -1700,7 +1700,7 @@ export const MbappeOnChainDatas: TalentOnChainDatas = {
     ]
 }
 
-export const USDCTokenAddress: Address = '0x9E3dda3Ec8ea621a0036027dc6C63D63394B24F0'
+export const USDCTokenAddress: Address = '0x75f63c90B5CAc0bD5591E936c32dB272E0BD7112'
 export const USDCAbi: Narrow<Abi> = [
     {
         "inputs": [],

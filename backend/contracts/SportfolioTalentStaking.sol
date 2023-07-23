@@ -4,13 +4,15 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 /**
  * @title SportfolioTalentStaking
  * @dev Contract for staking and earning rewards in USDC by staking Sportfolio Talent Tokens (representative tokens for athletes).
  */
-contract SportfolioTalentStaking is Ownable {
+contract SportfolioTalentStaking is Ownable, ReentrancyGuard, Pausable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
@@ -183,7 +185,7 @@ contract SportfolioTalentStaking is Ownable {
     function stake(
         uint256 amount,
         uint256 duration
-    ) external updateReward(msg.sender) {
+    ) external whenNotPaused nonReentrant updateReward(msg.sender) {
         require(amount > 0, "Amount must be greater than zero");
         require(duration > 0, "Duration must be greater than zero");
 
@@ -195,7 +197,7 @@ contract SportfolioTalentStaking is Ownable {
             // Already staking
             staking.duration = staking.duration.add(duration);
             staking.finishAt = staking.finishAt.add(duration);
-            staking.amount = staking.duration.add(amount);
+            staking.amount = staking.amount.add(amount);
         } else {
             // new staker
             _stakingBalances[msg.sender] = Staking(
@@ -223,6 +225,7 @@ contract SportfolioTalentStaking is Ownable {
      */
     function claimReward()
         public
+        nonReentrant
         updateReward(msg.sender)
         isStaker(msg.sender)
     {
@@ -246,7 +249,7 @@ contract SportfolioTalentStaking is Ownable {
      */
     function unstake(
         uint256 amount
-    ) external updateReward(msg.sender) isStaker(msg.sender) {
+    ) external nonReentrant updateReward(msg.sender) isStaker(msg.sender) {
         require(amount > 0, "Amount must be greater than zero");
 
         Staking storage staking = _stakingBalances[msg.sender];

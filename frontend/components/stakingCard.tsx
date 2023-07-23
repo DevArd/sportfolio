@@ -6,6 +6,7 @@ import { formatUnits, parseEther } from 'viem'
 import { useAccount, useBalance, useContractReads, useContractWrite, usePrepareContractWrite } from 'wagmi'
 import AddReward from './addReward'
 import StakeButton from './stakeButton'
+import ClaimButton from './claimButton'
 
 export default function StakingCard(
     {
@@ -64,14 +65,6 @@ export default function StakingCard(
         isOwner: boolean = false
     const decimals = balance?.data?.decimals || 1;
 
-    const { config: configClaims } = usePrepareContractWrite({
-        address: talent.onChainDatas.stakingContractAddress,
-        abi: talent.onChainDatas.stakingContractAbi,
-        functionName: 'claimReward',
-    })
-
-    const { write: writeClaims } = useContractWrite(configClaims)
-
     if (isSuccess) {
         balanceValue = BigInt(balance.data!.value.toString());
         rewardPerToken = BigInt(data![0].result!.toString());
@@ -89,6 +82,7 @@ export default function StakingCard(
             <></>
         )
     }
+
     return (
         <Box>
             <Card
@@ -127,9 +121,7 @@ export default function StakingCard(
                     </CardBody>
                     <CardFooter>
                         {earned > 0 ? <>
-                            <Button mr={'2'} variant='solid' colorScheme='transparent' disabled={!writeClaims} onClick={() => writeClaims?.()}>
-                                Claims
-                            </Button>
+                            <ClaimButton talent={talent} />
                         </> : <></>}
                         {balanceValue > 0 ? <>
                             <StakeButton talent={talent} amount={formatedBalance} />

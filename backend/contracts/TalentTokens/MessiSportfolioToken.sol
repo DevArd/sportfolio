@@ -8,8 +8,8 @@ contract MessiSportfolioToken is SportfolioTalentToken {
         SportfolioTalentToken(
             "Messi Sportfolio Token",
             "MESSI",
-            100_000 * 10 ** decimals(),
-            1_000_000 * 10 ** decimals()
+            1_000_000 * 10 ** decimals(),
+            10_000_000 * 10 ** decimals()
         )
     {}
 }

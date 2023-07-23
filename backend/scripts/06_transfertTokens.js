@@ -1,9 +1,4 @@
 // npx hardat run ./scripts/06_transfertTokens.js --network goerli
-// MessiSportfolioToken déployé à l'adresse : 0x40ED11741F5d7F8d97BF3535E3Ba2c8D755ad858
-// MBappeSportfolioToken déployé à l'adresse : 0x2e38c13b8657aA3ddEE317a5De4ca7B99c4704Bb
-// FakeUSDC déployé à l'adresse : 0x9E3dda3Ec8ea621a0036027dc6C63D63394B24F0
-// SportfolioTalentStaking MessiSportfolioToken/FakeUSDC dSDC déployé à l'adresse : 0x060EBAA867de614FB4903F0da5f595fA01432A9E
-// SportfolioTalentStaking MBappeSportfolioToken/FakeUSDC déployé à l'adresse : 0xf6aC1BCA0B5293ca0800025c775d1b1f78A1089d
 const { ethers } = require("hardhat");
 require("dotenv").config();
 const fs = require("fs")
@@ -22,9 +17,9 @@ const getTheAbi = (abiFilePath) => {
     }
 }
 
-const USDC_ADDRESS = '0x9E3dda3Ec8ea621a0036027dc6C63D63394B24F0'
-const MBAPPE_ADDRESS = '0x2e38c13b8657aA3ddEE317a5De4ca7B99c4704Bb'
-const MESSI_ADDRESS = '0x40ED11741F5d7F8d97BF3535E3Ba2c8D755ad858'
+const USDC_ADDRESS = process.env.USDC_ADDESS || ""
+const MBAPPE_ADDRESS = process.env.MBAPPE_ADDRESS || ""
+const MESSI_ADDRESS = process.env.MESSI_ADDESS || ""
 
 const WALLET_PRIVATE_KEY_1 = process.env.WALLET_PRIVATE_KEY_1 || ""
 const GEORLI_PROVIDER = process.env.GEORLI_PROVIDER || ""

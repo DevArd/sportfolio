@@ -8,8 +8,8 @@ contract MBappeSportfolioToken is SportfolioTalentToken {
         SportfolioTalentToken(
             "MBappe Sportfolio Token",
             "MBAPPE",
-            100_000 * 10 ** decimals(),
-            1_000_000 * 10 ** decimals()
+            1_000_000 * 10 ** decimals(),
+            10_000_000 * 10 ** decimals()
         )
     {}
 }

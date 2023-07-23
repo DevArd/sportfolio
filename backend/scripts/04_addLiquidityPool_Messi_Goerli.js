@@ -1,9 +1,4 @@
 // npx hardat run ./scripts/04_addLiquidityPool_Messi_Goerli.js --network goerli
-// MessiSportfolioToken déployé à l'adresse : 0x40ED11741F5d7F8d97BF3535E3Ba2c8D755ad858
-// MBappeSportfolioToken déployé à l'adresse : 0x2e38c13b8657aA3ddEE317a5De4ca7B99c4704Bb
-// FakeUSDC déployé à l'adresse : 0x9E3dda3Ec8ea621a0036027dc6C63D63394B24F0
-// SportfolioTalentStaking MessiSportfolioToken/FakeUSDC dSDC déployé à l'adresse : 0x060EBAA867de614FB4903F0da5f595fA01432A9E
-// SportfolioTalentStaking MBappeSportfolioToken/FakeUSDC déployé à l'adresse : 0xf6aC1BCA0B5293ca0800025c775d1b1f78A1089d
 const { ethers } = require("hardhat");
 const axios = require("axios");
 const fs = require("fs")
@@ -23,9 +18,9 @@ const getTheAbi = (abiFilePath) => {
   }
 }
 
-const UNISWAP_V2_ROUTER_ADDRESS = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
-const USDC_ADDRESS = '0x9E3dda3Ec8ea621a0036027dc6C63D63394B24F0'
-const MESSI_ADDRESS = '0x40ED11741F5d7F8d97BF3535E3Ba2c8D755ad858'
+const UNISWAP_V2_ROUTER_ADDRESS = process.env.UNISWAP_V2_ROUTER_ADDRESS || ""
+const USDC_ADDRESS = process.env.USDC_ADDESS || ""
+const MESSI_ADDRESS = process.env.MESSI_ADDESS || ""
 
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || ""
 const GEORLI_PROVIDER = process.env.GEORLI_PROVIDER || ""

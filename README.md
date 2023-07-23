@@ -8,7 +8,7 @@ Sportfolio est une plateforme d'investissement basée sur la blockchain Ethereum
 
 ## Fonctionnalités
 
-- **Tokenisation des Talents :** Chaque talent sportif est représenté par un token.
+- **Tokenisation des talents :** Chaque talent sportif est représenté par un token.
 - **Investissement :** Les utilisateurs peuvent acheter des tokens de talents et ainsi investir dans leur succès futur.
 - **Staking :** Les investisseurs peuvent staker leurs tokens de talents pour gagner des récompenses passives basées sur les performances du talent.
 
@@ -38,7 +38,7 @@ Sportfolio est une plateforme d'investissement basée sur la blockchain Ethereum
 ## Lancement de l'Application Frontend
 
 1. Build l'application : `yarn build`
-2. Lancez l'application frontend : `npm run dev`
+2. Lancez l'application frontend : `yarn dev`
 3. Accédez à `http://localhost:3000` dans votre navigateur pour accéder à Sportfolio.
 
 ## Contribuer

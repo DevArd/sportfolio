@@ -1,8 +1,8 @@
 import { ITalent } from '@/utils/talentsDatas'
 import { Button, Text, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Slider, SliderFilledTrack, SliderThumb, SliderTrack, useDisclosure, useToast } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
-import { parseEther } from 'viem'
-import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+import React, { useEffect, useState } from 'react'
+import { formatEther, parseEther } from 'viem'
+import { usePrepareContractWrite, useContractWrite, useContractRead, useAccount } from 'wagmi'
 
 export default function StakeButton(
     {
@@ -10,23 +10,35 @@ export default function StakeButton(
         amount
     }: {
         talent: ITalent,
-        amount: BigInt
+        amount: number
     }
 ) {
     const toast = useToast()
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const { address } = useAccount()
+    const [sliderDurationValue, setSliderDurationValue] = useState(365)
+    const [sliderAmountValue, setSliderAmountValue] = useState(1)
 
-    const { config } = usePrepareContractWrite({
+    const { config: configStake } = usePrepareContractWrite({
         address: talent.onChainDatas.stakingContractAddress,
         abi: talent.onChainDatas.stakingContractAbi,
         functionName: 'stake',
-        args: [parseEther(`100`), parseEther(`100`)],
+        args: [parseEther(`${sliderAmountValue}`), parseEther(`${sliderDurationValue}`)],
     })
 
-    const { write, isSuccess, isError, error } = useContractWrite(config)
+    const { write: writeStake, isSuccess: isSuccessStake, isError: isErrorStake, error } = useContractWrite(configStake)
+
+    const { config: configApprove } = usePrepareContractWrite({
+        address: talent.onChainDatas.tokenAddress,
+        abi: talent.onChainDatas.tokenAbi,
+        functionName: 'approve',
+        args: [talent.onChainDatas.stakingContractAddress, parseEther(`${sliderAmountValue}`)],
+    })
+
+    const { write: writeApprove } = useContractWrite(configApprove)
 
     useEffect(() => {
-        if (isError) {
+        if (isErrorStake) {
             toast({
                 title: 'KO',
                 status: 'error',
@@ -35,10 +47,7 @@ export default function StakeButton(
                 duration: 9000,
             })
         }
-    }, [isError, error]);
-
-    useEffect(() => {
-        if (isSuccess) {
+        if (isSuccessStake) {
             toast({
                 title: 'Success',
                 status: 'success',
@@ -47,9 +56,16 @@ export default function StakeButton(
                 duration: 9000,
             })
         }
-    }, [isSuccess]);
+    }, [isSuccessStake, isErrorStake, error]);
 
-    // TODO ALLOWANCE
+    const { data } = useContractRead({
+        address: talent.onChainDatas.tokenAddress,
+        abi: talent.onChainDatas.tokenAbi,
+        functionName: 'allowance',
+        args: [address, talent.onChainDatas.stakingContractAddress]
+    })
+
+    const approvedAmount: number = Number(formatEther(data as bigint)) || 0;
 
     return (
         <>
@@ -62,15 +78,17 @@ export default function StakeButton(
                     <ModalHeader>Stake - {talent.name}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <Text>Amount</Text>
-                        <Slider aria-label='slider-ex-2' colorScheme='pink' defaultValue={30}>
+                        <Text>Amount : {sliderAmountValue}</Text>
+                        <Slider aria-label='slider-ex-2' colorScheme='pink' defaultValue={1} min={1}
+                            max={Number(amount)} onChange={(val) => setSliderAmountValue(val)}>
                             <SliderTrack>
                                 <SliderFilledTrack />
                             </SliderTrack>
                             <SliderThumb />
                         </Slider>
-                        <Text>Duration</Text>
-                        <Slider aria-label='slider-ex-2' colorScheme='pink' defaultValue={365}>
+                        <Text>Duration : {sliderDurationValue}j</Text>
+                        <Slider aria-label='slider-ex-2' colorScheme='pink' defaultValue={365} min={1}
+                            max={365 * 4} onChange={(val) => setSliderDurationValue(val)}>
                             <SliderTrack>
                                 <SliderFilledTrack />
                             </SliderTrack>
@@ -78,9 +96,14 @@ export default function StakeButton(
                         </Slider>
                     </ModalBody>
                     <ModalFooter>
-                        <Button ml={'5'} variant='solid' colorScheme='transparent' disabled={!write} onClick={() => write?.()}>
-                            Stake
-                        </Button>
+                        {(approvedAmount > sliderAmountValue) ? <>
+                            <Button ml={'5'} variant='solid' colorScheme='transparent' disabled={!writeStake} onClick={() => writeStake?.()}>
+                                Stake
+                            </Button></> : <>
+                            <Button ml={'5'} variant='solid' colorScheme='transparent' disabled={!writeApprove} onClick={() => writeApprove?.()}>
+                                Approve
+                            </Button>
+                        </>}
                     </ModalFooter>
                 </ModalContent>
             </Modal>

@@ -2,7 +2,8 @@
 const { ethers } = require("hardhat");
 require("dotenv").config();
 const fs = require("fs")
-const path = require("path")
+const path = require("path");
+const { parseEther } = require("ethers");
 
 const getTheAbi = (abiFilePath) => {
     try {
@@ -36,7 +37,7 @@ async function main() {
     const messiContract = new ethers.Contract(MESSI_ADDRESS, abiMessi, provider);
     const mbappeContract = new ethers.Contract(MBAPPE_ADDRESS, abiMmappe, provider);
 
-    const amount = "1000";
+    const amount = parseEther("100");
     let tx, receipt;
 
     tx = await usdcContract.connect(wallet).transfer(recipient.address, amount);

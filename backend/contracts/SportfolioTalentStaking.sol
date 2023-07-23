@@ -249,7 +249,7 @@ contract SportfolioTalentStaking is Ownable, ReentrancyGuard, Pausable {
      */
     function unstake(
         uint256 amount
-    ) external nonReentrant updateReward(msg.sender) isStaker(msg.sender) {
+    ) external updateReward(msg.sender) isStaker(msg.sender) {
         require(amount > 0, "Amount must be greater than zero");
 
         Staking storage staking = _stakingBalances[msg.sender];

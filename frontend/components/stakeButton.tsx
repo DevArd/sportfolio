@@ -65,7 +65,7 @@ export default function StakeButton(
         args: [address, talent.onChainDatas.stakingContractAddress]
     })
 
-    const approvedAmount: number = Number(formatEther(data as bigint)) || 0;
+    const approvedAmount: number = data ? Number(formatEther(data as bigint)) : 0;
 
     return (
         <>

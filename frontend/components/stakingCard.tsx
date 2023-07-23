@@ -62,7 +62,7 @@ export default function StakingCard(
         earned: bigint = BigInt(0),
         totalPrice: number = 0,
         isOwner: boolean = false
-    const decimals = balance!.data!.decimals;
+    const decimals = balance?.data?.decimals || 1;
 
     if (isSuccess) {
         balanceValue = BigInt(balance.data!.value.toString());
@@ -98,16 +98,16 @@ export default function StakingCard(
                     <CardBody>
                         <Heading size='md' mb={'2'}>{talent.name}</Heading>
                         <Text>
-                            Staked : {formatUnits(stakedBalance, decimals)}
+                            Staked : {Number(formatUnits(stakedBalance, decimals)).toFixed(2)}
                         </Text>
                         <Text>
-                            Available to stake : {formatUnits(balanceValue, decimals)}
+                            Available to stake : {Number(formatUnits(balanceValue, decimals)).toFixed(2)}
                         </Text>
                         <Text>
-                            Available to claim : {formatUnits(earned, decimals)}
+                            Available to claim : {Number(formatUnits(earned, decimals)).toFixed(2)}
                         </Text>
                         <Text>
-                            Current reward per token : {formatUnits(rewardPerToken, decimals)}
+                            Current reward per token : {Number(formatUnits(rewardPerToken, decimals)).toFixed(2)}
                         </Text>
                         <Text>
                             Price per token : ${Number(formatUnits(price, decimals)).toFixed(2)}

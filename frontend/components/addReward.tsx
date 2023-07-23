@@ -1,7 +1,6 @@
 import { ITalent } from '@/utils/talentsDatas'
 import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Button, useToast, Flex } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
-import { parseEther } from 'viem'
 import { useContractWrite, usePrepareContractWrite } from 'wagmi'
 
 export default function AddReward(
@@ -11,7 +10,7 @@ export default function AddReward(
         talent: ITalent
     }
 ) {
-    const [value, setValue] = React.useState(0)
+    const [value, setValue] = React.useState(500)
     const toast = useToast()
     const handleChange = (value: any) => setValue(value)
 
@@ -19,7 +18,7 @@ export default function AddReward(
         address: talent.onChainDatas.stakingContractAddress,
         abi: talent.onChainDatas.stakingContractAbi,
         functionName: 'addRewardAmount',
-        args: [parseEther(`100`)],
+        args: [value],
     })
 
     const { write, isSuccess, isError, error } = useContractWrite(config)

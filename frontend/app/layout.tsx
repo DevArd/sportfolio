@@ -19,7 +19,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { infuraProvider } from 'wagmi/providers/infura'
 import App from './app';
-require("dotenv").config();
 
 library.add(fas)
 
@@ -29,13 +28,13 @@ const { chains, publicClient } = configureChains(
   [goerli, sepolia, hardhat],
   [
     publicProvider(),
-    infuraProvider({ apiKey: `${process.env.INFURA_API_KEY}` }),
+    infuraProvider({ apiKey: `${process.env.NEXT_PUBLIC_INFURA_API_KEY}` }),
   ]
 );
 
 const { connectors } = getDefaultWallets({
   appName: 'Sportfolio',
-  projectId: `${process.env.WALLET_CONNECT_PROJECT_ID}`,
+  projectId: `${process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID}`,
   chains
 });
 

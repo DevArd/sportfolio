@@ -29,10 +29,10 @@ const MESSI_ADDRESS = '0x40ED11741F5d7F8d97BF3535E3Ba2c8D755ad858'
 
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || ""
 const GEORLI_PROVIDER = process.env.GEORLI_PROVIDER || ""
-const WALLET_PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY || ""
+const WALLET_PRIVATE_KEY_1 = process.env.WALLET_PRIVATE_KEY_1 || ""
 
 const provider = new ethers.getDefaultProvider(GEORLI_PROVIDER)
-const wallet = new ethers.Wallet(WALLET_PRIVATE_KEY, provider);
+const wallet = new ethers.Wallet(WALLET_PRIVATE_KEY_1, provider);
 
 async function main() {
   // Get ABI
@@ -40,8 +40,8 @@ async function main() {
   const res = await axios.get(abiUrl);
   const abiRouter = JSON.parse(res.data.result);
 
-  const abiUsdc = getTheAbi("../artifacts/contracts/FakeUSDC.sol/FakeUSDC.json");// await ethers.getContractAt("contracts/FakeUSDC.sol:FakeUSDC", USDC_ADDRESS);
-  const abiMessi = getTheAbi("../artifacts/contracts/TalentTokens/MessiSportfolioToken.sol/MessiSportfolioToken.json");//await ethers.getContractAt("contracts/TalentTokens/MessiSportfolioToken.sol:MessiSportfolioToken", MESSI_ADDRESS);
+  const abiUsdc = getTheAbi("../artifacts/contracts/FakeUSDC.sol/FakeUSDC.json");
+  const abiMessi = getTheAbi("../artifacts/contracts/TalentTokens/MessiSportfolioToken.sol/MessiSportfolioToken.json");
 
   // Get UNISWAP_V2_ROUTER_ADDRESS contract
   const routerContract = new ethers.Contract(UNISWAP_V2_ROUTER_ADDRESS, abiRouter, provider);

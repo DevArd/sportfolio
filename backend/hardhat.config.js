@@ -4,7 +4,8 @@ require("hardhat-docgen");
 require("hardhat-gas-reporter");
 require('solidity-coverage')
 
-const WALLET_PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY || ""
+const WALLET_PRIVATE_KEY_1 = process.env.WALLET_PRIVATE_KEY_1 || ""
+const WALLET_PRIVATE_KEY_2 = process.env.WALLET_PRIVATE_KEY_2 || ""
 const HARDHAT_PRIVATE_KEY_1 = process.env.HARDHAT_PRIVATE_KEY_1 || ""
 const HARDHAT_PRIVATE_KEY_2 = process.env.HARDHAT_PRIVATE_KEY_2 || ""
 const INFURA_API_KEY = process.env.INFURA_API_KEY || ""
@@ -25,12 +26,12 @@ module.exports = {
     // },
     sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
-      accounts: [WALLET_PRIVATE_KEY],
+      accounts: [WALLET_PRIVATE_KEY_1, WALLET_PRIVATE_KEY_2],
       chainId: 11155111
     },
     goerli: {
       url: `https://goerli.infura.io/v3/${INFURA_API_KEY}`,
-      accounts: [WALLET_PRIVATE_KEY],
+      accounts: [WALLET_PRIVATE_KEY_1, WALLET_PRIVATE_KEY_2],
       chainId: 5
     }
   },

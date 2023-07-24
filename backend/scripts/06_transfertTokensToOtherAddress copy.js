@@ -1,4 +1,4 @@
-// npx hardat run ./scripts/06_transfertTokens.js --network goerli
+// npx hardat run ./scripts/06_transfertTokensToOtherAddress.js --network goerli
 const { ethers } = require("hardhat");
 require("dotenv").config();
 const fs = require("fs")

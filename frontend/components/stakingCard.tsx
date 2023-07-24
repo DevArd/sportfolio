@@ -31,10 +31,6 @@ export default function StakingCard(
         contracts: [
             {
                 ...stakingContract,
-                functionName: 'rewardPerToken',
-            },
-            {
-                ...stakingContract,
                 functionName: 'balanceOf',
                 args: [`${address}`],
             },
@@ -57,7 +53,6 @@ export default function StakingCard(
     })
 
     let balanceValue: bigint = BigInt(0),
-        rewardPerToken: bigint = BigInt(0),
         stakedBalance: bigint = BigInt(0),
         price: bigint = BigInt(0),
         earned: bigint = BigInt(0),
@@ -67,12 +62,11 @@ export default function StakingCard(
 
     if (isSuccess) {
         balanceValue = BigInt(balance.data!.value.toString());
-        rewardPerToken = BigInt(data![0].result!.toString());
-        stakedBalance = BigInt(data![1].result!.toString());
-        earned = BigInt(data![3].result!.toString());
-        price = BigInt((data![2].result! as any)[1].toString());
+        stakedBalance = BigInt(data![0].result!.toString());
+        earned = BigInt(data![2].result!.toString());
+        price = BigInt((data![1].result! as any)[1].toString());
         totalPrice = Number(formatUnits(price, decimals)) * Number(formatUnits(balanceValue, decimals))
-        isOwner = address === data![4].result!.toString()
+        isOwner = address === data![3].result!.toString()
     }
 
     const formatedBalance: number = Number(formatUnits(balanceValue, decimals));
@@ -109,9 +103,6 @@ export default function StakingCard(
                         <Text>
                             Available to claim : {Number(formatUnits(earned, decimals)).toFixed(2)}
                         </Text>
-                        {/* <Text>
-                            Current reward per token : {Number(formatUnits(rewardPerToken, decimals)).toFixed(2)}
-                        </Text> */}
                         <Text>
                             Price per token : ${Number(formatUnits(price, decimals)).toFixed(2)}
                         </Text>

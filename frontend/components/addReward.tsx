@@ -11,7 +11,7 @@ export default function AddReward(
         talent: ITalent
     }
 ) {
-    const [value, setValue] = React.useState(500)
+    const [value, setValue] = React.useState('500')
     const toast = useToast()
     const handleChange = (value: any) => setValue(value)
 
@@ -19,7 +19,7 @@ export default function AddReward(
         address: talent.onChainDatas.stakingContractAddress,
         abi: talent.onChainDatas.stakingContractAbi,
         functionName: 'addRewardAmount',
-        args: [`${value}`],
+        args: [`${parseEther(value)}`],
     })
 
     const { write, isSuccess, isError, error } = useContractWrite(config)
@@ -51,7 +51,7 @@ export default function AddReward(
     return (
         <>
             <Flex direction={'row'} mt={'2'} >
-            <NumberInput step={100} defaultValue={1000} min={100} max={100_000} width={'75%'} value={value} onChange={handleChange}>
+                <NumberInput step={100} defaultValue={1000} min={100} max={50_000} width={'75%'} value={value} onChange={handleChange}>
                     <NumberInputField />
                     <NumberInputStepper>
                         <NumberIncrementStepper />

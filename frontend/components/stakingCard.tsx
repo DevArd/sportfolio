@@ -7,6 +7,7 @@ import { useAccount, useBalance, useContractReads } from 'wagmi'
 import AddReward from './addReward'
 import StakeButton from './stakeButton'
 import ClaimButton from './claimButton'
+import UnstakeButton from './unstakeButton'
 
 export default function StakingCard(
     {
@@ -118,9 +119,7 @@ export default function StakingCard(
                             <StakeButton talent={talent} amount={formatedBalance} />
                         </> : <></>}
                         {stakedBalance > 0 ? <>
-                            <Button variant='outline'>
-                                Unstake
-                            </Button>
+                            <UnstakeButton talent={talent} amount={stakedBalance} />
                         </> : <></>}
                     </CardFooter>
                 </Stack>

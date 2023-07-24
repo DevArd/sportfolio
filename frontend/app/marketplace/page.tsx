@@ -9,7 +9,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 
 export default function Page() {
     return (
-        <Tabs variant='soft-rounded' colorScheme='green' m={'2'}>
+        <Tabs variant='soft-rounded' colorScheme='brand' m={'2'}>
             <Center>
                 <TabList>
                     {sports.sort((a, b) => a.label.localeCompare(b.label)).map((sport, index) => (

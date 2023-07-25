@@ -46,5 +46,3 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
-
-// Pool = 0x97027E4514d4AaC7E63D1c8A4B2c8AaD9FF0d6a7

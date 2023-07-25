@@ -62,7 +62,7 @@ export default function StakingCard(
     const decimals = balance?.data?.decimals || 1;
 
     if (isSuccess) {
-        balanceValue = BigInt(balance.data!.value.toString());
+        balanceValue = BigInt(balance.data?.value?.toString() || 0);
         stakedBalance = BigInt(data![0].result!.toString());
         earned = BigInt(data![2].result!.toString());
         price = BigInt((data![1].result! as any)[1].toString());

@@ -8,6 +8,10 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
+/// The account should be a staker.
+/// @param account the account address.
+error NoStaking(address account);
+
 /**
  * @title SportfolioTalentStaking
  * @dev Contract for staking and earning rewards in USDC by staking Sportfolio Talent Tokens (representative tokens for athletes).
@@ -76,20 +80,14 @@ contract SportfolioTalentStaking is Ownable, ReentrancyGuard, Pausable {
     /* ========== MODIFIERS ========== */
 
     modifier updateReward(address _account) {
-        rewardsPerTokenStaked = rewardPerToken();
-        lastUpdateTime = lastTimeRewardApplicable();
-
-        Staking storage staking = _stakingBalances[_account];
-        if (staking.isActive && _account != address(0)) {
-            staking.rewards = earned(_account);
-            staking.rewardsPerTokenPaid = rewardsPerTokenStaked;
-        }
-
+        _updateRewards(_account);
         _;
     }
 
     modifier isStaker(address account) {
-        require(_stakingBalances[account].isActive, "Not staking");
+        if (_stakingBalances[account].isActive) {
+            revert NoStaking(account);
+        }
         _;
     }
 
@@ -359,5 +357,20 @@ contract SportfolioTalentStaking is Ownable, ReentrancyGuard, Pausable {
         _totalFees = 0;
         usdcRewardsToken.safeTransfer(msg.sender, balance);
         emit RewardFeesClaimed(balance);
+    }
+
+    /**
+     * @dev Update reward.
+     * @param _account Address of the staker.
+     */
+    function _updateRewards(address _account) private {
+        rewardsPerTokenStaked = rewardPerToken();
+        lastUpdateTime = lastTimeRewardApplicable();
+
+        Staking storage staking = _stakingBalances[_account];
+        if (staking.isActive && _account != address(0)) {
+            staking.rewards = earned(_account);
+            staking.rewardsPerTokenPaid = rewardsPerTokenStaked;
+        }
     }
 }
